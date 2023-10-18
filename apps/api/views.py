@@ -1,15 +1,18 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.status import *
+from rest_framework import permissions
 
 from apps.plane.models import Plane
 from apps.flight.models import Flight
 from apps.airline.models import Airline
 from .serializers import *
 
-
 class PlaneApiView(APIView):
 
+    def get_permissions(self):
+        return [permissions.IsAdminUser()]
+        
     def get(self, request):
         planes = Plane.objects.all()
         serializer = PlaneSerializer(planes, many=True)
@@ -32,6 +35,9 @@ class PlaneApiView(APIView):
             )
 
 class PlaneDetailApiView(APIView):
+
+    def get_permissions(self):
+        return [permissions.IsAdminUser()]
 
     def get(self, request, pk):
         plane = Plane.objects.get(pk=pk)
@@ -64,6 +70,9 @@ class PlaneDetailApiView(APIView):
 
 class FlightApiView(APIView):
 
+    def get_permissions(self):
+        return [permissions.IsAdminUser()]
+
     def get(self, request):
         flights = Flight.objects.all()
         serializer = FlightSerializer(flights, many=True)
@@ -86,6 +95,9 @@ class FlightApiView(APIView):
             )
 
 class FlightDetailApiView(APIView):
+
+    def get_permissions(self):
+        return [permissions.IsAdminUser()]
 
     def get(self, request, pk):
         flight = Flight.objects.get(pk=pk)
@@ -119,6 +131,9 @@ class FlightDetailApiView(APIView):
 
 class AirlineApiView(APIView):
 
+    def get_permissions(self):
+        return [permissions.IsAdminUser()]
+
     def get(self, request):
         airlines = Airline.objects.all()
         serializer = AirlineSerializer(airlines, many=True)
@@ -141,6 +156,9 @@ class AirlineApiView(APIView):
             )
 
 class AirlineDetailApiView(APIView):
+
+    def get_permissions(self):
+        return [permissions.IsAdminUser()]
 
     def get(self, request, pk):
         airline = Airline.objects.get(pk=pk)
